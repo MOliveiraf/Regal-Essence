@@ -2,6 +2,7 @@
 package com.example.demo.entities;
 
 import com.example.demo.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -32,6 +33,7 @@ public class OrderItem implements Serializable {
     }
 
     // Convenience methods to access the associated Order and Product directly
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
