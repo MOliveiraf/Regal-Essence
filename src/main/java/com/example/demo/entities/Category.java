@@ -2,7 +2,6 @@ package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -17,13 +16,14 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    // Many-to-many reverse side mapped by "categories" in Product
     @JsonIgnore
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
-    public Category() {
+    public Category() {}
 
-    }
     public Category(Long id, String name) {
         super();
         this.id = id;
@@ -53,7 +53,7 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Category)) return false;
         Category category = (Category) o;
         return Objects.equals(id, category.id);
     }
@@ -62,5 +62,4 @@ public class Category implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
