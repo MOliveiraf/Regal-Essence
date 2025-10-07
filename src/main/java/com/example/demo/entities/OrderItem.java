@@ -21,15 +21,28 @@ public class OrderItem implements Serializable {
     private Integer quantity;
     private Double price;
 
-    public OrderItem() {
+    public OrderItem() {}
+
+    /**
+     * Constructor linking an order and a product to an item, with quantity.
+     * The price is automatically set based on the product's current price.
+     */
+    public OrderItem(Order order, Product product, Integer quantity) {
+        id.setOrder(order);
+        id.setProduct(product);
+        this.quantity = quantity;
+        this.price = product.getPrice(); // ✅ Automatically use product price
     }
 
-    // Constructor linking an order and a product to an item, with quantity and price
+    /**
+     * Alternative constructor allowing a custom price (e.g., discounts).
+     */
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
-        this.price = price;
+        // If no price is provided, fallback to product price
+        this.price = (price != null) ? price : product.getPrice();
     }
 
     // Convenience methods to access the associated Order and Product directly
@@ -64,6 +77,10 @@ public class OrderItem implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getSubTotal() {
+        return price * quantity;
     }
 
     // Equality based on composite key (order + product)
