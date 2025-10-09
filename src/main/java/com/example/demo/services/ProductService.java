@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Product;
+import com.example.demo.entities.User;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class ProductService {
 
     public List<Product> findAll() {
         return repository.findAll();
+    }
+
+    public Product insert(Product product) {
+        return repository.save(product);
     }
 
     public Product findById(Long id) {

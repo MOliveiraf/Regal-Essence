@@ -6,13 +6,18 @@ import com.example.demo.entities.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable // Indicates that this class can be embedded as part of another entity's primary key
-public class OrderItemPK implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Embeddable
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderItemPK {
 
     @ManyToOne
     @JoinColumn(name = "order_id") // Foreign key reference to Order
@@ -22,21 +27,6 @@ public class OrderItemPK implements Serializable {
     @JoinColumn(name = "product_id") // Foreign key reference to Product
     private Product product;
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     // Composite key equality based on order and product
     @Override
